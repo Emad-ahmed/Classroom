@@ -14,7 +14,7 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" href="{% static 'css/style.css' %}" />
-
+    <link rel="stylesheet" href="{% static 'css/form.css' %}" />
     <title>{% block title %}{% endblock title %}</title>
   </head>
   <body>
@@ -37,20 +37,16 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ms-md-auto gap-2">
             <li class="nav-item rounded">
-              <a class="nav-link active" aria-current="page" href="#"
+              <a class="nav-link active" aria-current="page" href="/teacher"
                 ><i class="bi bi-house-fill me-2"></i>Home</a
               >
             </li>
             <li class="nav-item rounded">
-              <a class="nav-link" href="#"
-                ><i class="bi bi-people-fill me-2"></i>About</a
+              <a class="nav-link" href="{% url 'create' %}"
+                ><i class="bi bi-people-fill me-2"></i>Create Class</a
               >
             </li>
-            <li class="nav-item rounded">
-              <a class="nav-link" href="#"
-                ><i class="bi bi-telephone-fill me-2"></i>Contact</a
-              >
-            </li>
+
             <li class="nav-item dropdown rounded">
               <a
                 class="nav-link dropdown-toggle"
@@ -66,7 +62,10 @@
                 aria-labelledby="navbarDropdown"
               >
                 <li><a class="dropdown-item" href="#">Account</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li>
+                  <hr class="dropdown-divider" />
+                </li>
+                <li><a class="dropdown-item" href="#">Change Password</a></li>
                 <li>
                   <hr class="dropdown-divider" />
                 </li>

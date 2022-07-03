@@ -1,0 +1,65 @@
+
+  
+  .card {
+    border-radius: 8px;
+    color: white;
+    border: 1px solid #ccc;
+    min-height: 40vmin;
+    width: 30%;
+    background: #eee;
+    padding: 0.75rem;
+    -webkit-transform: rotateY(0deg);
+            transform: rotateY(0deg);
+    -webkit-transform: perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1);
+            transform: perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1);
+    will-change: transform;
+    -webkit-transform-style: preserve-3d;
+            transform-style: preserve-3d;
+    -webkit-transition: all 1s;
+    transition: all 1s;
+    background: linear-gradient(217deg, rgba(255, 0, 0, 0.4), rgba(255, 0, 0, 0) 70.71%), linear-gradient(127deg, rgba(0, 255, 0, 0.4), rgba(0, 255, 0, 0) 70.71%), linear-gradient(336deg, rgba(0, 0, 255, 0.4), rgba(0, 0, 255, 0) 70.71%);
+  }
+  
+  .card h1,
+  .card p {
+    color: black;
+    -webkit-transform: translate(8px, 8px);
+            transform: translate(8px, 8px);
+    -webkit-transition: all 1s;
+    transition: all 1s;
+    margin: 0;
+  }
+  
+  .card:hover {
+    -webkit-box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.25);
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.25);
+    z-index: 3;
+    background: linear-gradient(217deg, rgba(255, 0, 0, 0.9), rgba(255, 0, 0, 0) 70.71%), linear-gradient(127deg, rgba(0, 255, 0, 0.9), rgba(0, 255, 0, 0) 70.71%), linear-gradient(336deg, rgba(0, 0, 255, 0.9), rgba(0, 0, 255, 0) 70.71%);
+    -webkit-transform: perspective(1000px) rotateX(7deg) rotateY(-19deg) scale3d(1.1, 1.1, 1.1);
+            transform: perspective(1000px) rotateX(7deg) rotateY(-19deg) scale3d(1.1, 1.1, 1.1);
+    -webkit-transform: perspective(1000px) rotateX(calc(var(--xdeg) * 1deg)) rotateY(calc(var(--ydeg) * 1deg)) scale3d(1.1, 1.1, 1.1);
+            transform: perspective(1000px) rotateX(calc(var(--xdeg) * 1deg)) rotateY(calc(var(--ydeg) * 1deg)) scale3d(1.1, 1.1, 1.1);
+  }
+  
+  .card:hover h1 {
+    color: white;
+    -webkit-transform: translate(5px, 5px);
+            transform: translate(5px, 5px);
+    text-shadow: 3px 3px 2px rgba(0, 0, 0, 0.5);
+  }
+  
+  .card:hover p {
+    color: white;
+  }
+  
+  .card:first-child {
+    background-size: cover;
+    background-image: url(https://images.unsplash.com/photo-1656231892675-867e2db4847a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1662&q=80);
+  }
+  
+  .card:last-child {
+    background-image: url(https://images.unsplash.com/photo-1656231877753-1658b926365f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1662&q=80);
+    background-size: cover;
+  }
+  
+ 
