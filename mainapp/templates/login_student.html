@@ -4,33 +4,47 @@
 
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/signup_teacher.css' %}">
+{% if messages %}
+<ul class="messages">
+  {% for message in messages %}
+  <li
+    {%
+    if
+    message.tags
+    %}
+    class="bg-{{ message.tags }} p-4 text-center"
+    {%
+    endif
+    %}
+  >
+    {{ message }}
+  </li>
+  {% endfor %}
+</ul>
+{% endif %}
 <div class="form">
       
     <ul class="tab-group">
-      <li class="tab active"><a href="/">Teacher</a></li>
-      <li class="tab"><a href="{% url 'student_login' %}">Student</a></li>
+      <li class="tab {{teacher_login}}"><a href="/">Teacher</a></li>
+      <li class="tab {{student_login}}"><a href="{% url 'student_login' %}">Student</a></li>
     </ul>
     
     <div class="tab-content">
       <div id="signup">   
         <h1>Sign Up Student</h1>
         
-        <form action="/" method="post">
-        
+        <form action="" method="post">
+        {% csrf_token %}
         <div class="top-row">
           
         <div class="field-wrap">
-          <label>
-            Username<span class="req">*</span>
-          </label>
-          <input type="text"  required autocomplete="off"/>
+         
+          <input type="number" placeholder="Id No"  name="id_no" required autocomplete="off"/>
         </div>
         
         <div class="field-wrap">
-          <label>
-            Set A Password<span class="req">*</span>
-          </label>
-          <input type="password"required autocomplete="off"/>
+          
+          <input type="password" placeholder="Password" name="password" required autocomplete="off"/>
         </div>
 
         <a href="{% url 'student_register' %}">Create an Account?</a> <br>

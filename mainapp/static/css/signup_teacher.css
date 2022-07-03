@@ -145,13 +145,15 @@ textarea {
   border: 0;
   outline: none;
   border-radius: 20px;
-  padding: 15px 0;
+  padding: 8px 0;
+  padding-left: 1rem;
+  padding-right: 1rem;
   font-size: 2rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: .1em;
-
   color: #ffffff;
+  background: #179b77;;
   -webkit-transition: all 0.5s ease;
   transition: all 0.5s ease;
   -webkit-appearance: none;
