@@ -17,8 +17,11 @@ class TeacherHome(View):
 
 class CreateClassview(View):
     def get(self, request):
-        fm = CreateClassForm()
-        return render(request, 'createclass.html', {'form': fm})
+        if request.user.is_authenticated:
+            fm = CreateClassForm()
+            return render(request, 'createclass.html', {'form': fm})
+        else:
+            return redirect("/")
 
     def post(self, request):
         fm = CreateClassForm(request.POST)
@@ -30,3 +33,12 @@ class CreateClassview(View):
         else:
             messages.success(request, "Failed To Saved")
         return render(request, 'createclass.html', {'form': fm})
+
+
+class ClassShow(View):
+    def get(self, request, id):
+        if request.user.is_authenticated:
+            classshow = CreateClass.objects.get(pk=id)
+            return render(request, 'classview.html', {'classshow': classshow})
+        else:
+            return redirect("/")
