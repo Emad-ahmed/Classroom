@@ -1,65 +1,108 @@
 
-  
-  .card {
-    border-radius: 8px;
-    color: white;
-    border: 1px solid #ccc;
-    min-height: 40vmin;
-    width: 30%;
-    background: #eee;
-    padding: 0.75rem;
-    -webkit-transform: rotateY(0deg);
-            transform: rotateY(0deg);
-    -webkit-transform: perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1);
-            transform: perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1);
-    will-change: transform;
-    -webkit-transform-style: preserve-3d;
-            transform-style: preserve-3d;
-    -webkit-transition: all 1s;
-    transition: all 1s;
-    background: linear-gradient(217deg, rgba(255, 0, 0, 0.4), rgba(255, 0, 0, 0) 70.71%), linear-gradient(127deg, rgba(0, 255, 0, 0.4), rgba(0, 255, 0, 0) 70.71%), linear-gradient(336deg, rgba(0, 0, 255, 0.4), rgba(0, 0, 255, 0) 70.71%);
-  }
-  
-  .card h1,
-  .card p {
-    color: black;
-    -webkit-transform: translate(8px, 8px);
-            transform: translate(8px, 8px);
-    -webkit-transition: all 1s;
-    transition: all 1s;
-    margin: 0;
-  }
-  
-  .card:hover {
-    -webkit-box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.25);
-            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.25);
-    z-index: 3;
-    background: linear-gradient(217deg, rgba(255, 0, 0, 0.9), rgba(255, 0, 0, 0) 70.71%), linear-gradient(127deg, rgba(0, 255, 0, 0.9), rgba(0, 255, 0, 0) 70.71%), linear-gradient(336deg, rgba(0, 0, 255, 0.9), rgba(0, 0, 255, 0) 70.71%);
-    -webkit-transform: perspective(1000px) rotateX(7deg) rotateY(-19deg) scale3d(1.1, 1.1, 1.1);
-            transform: perspective(1000px) rotateX(7deg) rotateY(-19deg) scale3d(1.1, 1.1, 1.1);
-    -webkit-transform: perspective(1000px) rotateX(calc(var(--xdeg) * 1deg)) rotateY(calc(var(--ydeg) * 1deg)) scale3d(1.1, 1.1, 1.1);
-            transform: perspective(1000px) rotateX(calc(var(--xdeg) * 1deg)) rotateY(calc(var(--ydeg) * 1deg)) scale3d(1.1, 1.1, 1.1);
-  }
-  
-  .card:hover h1 {
-    color: white;
-    -webkit-transform: translate(5px, 5px);
-            transform: translate(5px, 5px);
-    text-shadow: 3px 3px 2px rgba(0, 0, 0, 0.5);
-  }
-  
-  .card:hover p {
-    color: white;
-  }
-  
-  .card:first-child {
-    background-size: cover;
-    background-image: url(https://images.unsplash.com/photo-1656231892675-867e2db4847a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1662&q=80);
-  }
-  
-  .card:last-child {
-    background-image: url(https://images.unsplash.com/photo-1656231877753-1658b926365f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1662&q=80);
-    background-size: cover;
-  }
-  
- 
+      
+      .wrapper {
+        margin: 10vh;
+      }
+      
+      .card {
+        border: none;
+        -webkit-transition: all 500ms cubic-bezier(0.19, 1, 0.22, 1);
+        transition: all 500ms cubic-bezier(0.19, 1, 0.22, 1);
+        overflow: hidden;
+        border-radius: 20px;
+        min-height: 300px;
+        -webkit-box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.2);
+                box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.2);
+      }
+      
+      @media (max-width: 768px) {
+        .card {
+          min-height: 350px;
+        }
+      }
+      
+      @media (max-width: 420px) {
+        .card {
+          min-height: 300px;
+        }
+      }
+      
+      .card.card-has-bg {
+        -webkit-transition: all 500ms cubic-bezier(0.19, 1, 0.22, 1);
+        transition: all 500ms cubic-bezier(0.19, 1, 0.22, 1);
+        background-size: 120%;
+        background-repeat: no-repeat;
+        background-position: center center;
+      }
+      
+      .card.card-has-bg:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: inherit;
+        -webkit-filter: grayscale(1);
+        -moz-filter: grayscale(100%);
+        -ms-filter: grayscale(100%);
+        -o-filter: grayscale(100%);
+        filter: grayscale(100%);
+      }
+      
+      .card.card-has-bg:hover {
+        -webkit-transform: scale(0.98);
+                transform: scale(0.98);
+        -webkit-box-shadow: 0 0 5px -2px rgba(0, 0, 0, 0.3);
+                box-shadow: 0 0 5px -2px rgba(0, 0, 0, 0.3);
+        background-size: 130%;
+        -webkit-transition: all 500ms cubic-bezier(0.19, 1, 0.22, 1);
+        transition: all 500ms cubic-bezier(0.19, 1, 0.22, 1);
+      }
+      
+      .card.card-has-bg:hover .card-img-overlay {
+        -webkit-transition: all 800ms cubic-bezier(0.19, 1, 0.22, 1);
+        transition: all 800ms cubic-bezier(0.19, 1, 0.22, 1);
+        background: #234f6d;
+        background: -webkit-gradient(linear, left bottom, left top, from(rgba(4, 69, 114, 0.5)), to(#044572));
+        background: linear-gradient(0deg, rgba(4, 69, 114, 0.5) 0%, #044572 100%);
+      }
+      
+      .card .card-footer {
+        background: none;
+        border-top: none;
+      }
+      
+      .card .card-footer .media img {
+        border: solid 3px rgba(255, 255, 255, 0.3);
+      }
+      
+      .card .card-meta {
+        color: #26BD75;
+      }
+      
+      .card .card-body {
+        -webkit-transition: all 500ms cubic-bezier(0.19, 1, 0.22, 1);
+        transition: all 500ms cubic-bezier(0.19, 1, 0.22, 1);
+      }
+      
+      .card:hover {
+        cursor: pointer;
+        -webkit-transition: all 800ms cubic-bezier(0.19, 1, 0.22, 1);
+        transition: all 800ms cubic-bezier(0.19, 1, 0.22, 1);
+      }
+      
+      .card:hover .card-body {
+        margin-top: 30px;
+        -webkit-transition: all 800ms cubic-bezier(0.19, 1, 0.22, 1);
+        transition: all 800ms cubic-bezier(0.19, 1, 0.22, 1);
+      }
+      
+      .card .card-img-overlay {
+        -webkit-transition: all 800ms cubic-bezier(0.19, 1, 0.22, 1);
+        transition: all 800ms cubic-bezier(0.19, 1, 0.22, 1);
+        background: #234f6d;
+        background: -webkit-gradient(linear, left bottom, left top, from(rgba(35, 79, 109, 0.378589)), to(#455f71));
+        background: linear-gradient(0deg, rgba(35, 79, 109, 0.378589) 0%, #455f71 100%);
+      }
+      /*# sourceMappingURL=index.css.map */
