@@ -68,13 +68,29 @@
 <div class="container mt-4">
   <div class="list-group">
     {% for ann in allannouce %}
-    <a
-      href="#"
-      class="list-group-item list-group-item-action mb-4"
-      aria-current="true"
+    <li
+      class="list-group-item d-flex justify-content-between align-items-center mb-4 p-3"
     >
       {{ann.text}}
-    </a>
+      <span class="badge bg-primary rounded-pill"
+        ><i
+          class="fa-solid fa-ellipsis-vertical dropdown dropdown-toggle"
+          id="navbarDropdown"
+          data-bs-toggle="dropdown"
+        >
+        </i>
+        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <li><a class="dropdown-item" href="#">Edit</a></li>
+          <li><hr class="dropdown-divider" /></li>
+          <li>
+            <a class="dropdown-item" href="{% url 'deletelist' ann.id  %}"
+              >Delete</a
+            >
+          </li>
+        </ul>
+      </span>
+    </li>
+
     {% endfor %}
   </div>
 </div>

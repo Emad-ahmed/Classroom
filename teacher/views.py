@@ -1,3 +1,4 @@
+from ast import Return
 from django.shortcuts import redirect, render
 from django.http import HttpResponseRedirect
 from django.views import View
@@ -6,6 +7,7 @@ from .forms import CreateClassForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 # Create your views here.
+from django.urls import reverse
 
 
 class TeacherHome(View):
@@ -42,7 +44,7 @@ class ClassShow(View):
         if request.user.is_authenticated:
             classshow = CreateClass.objects.get(pk=id)
             allannouce = Announcement.objects.filter(classview=classshow)
-            return render(request, 'classview.html', {'classshow': classshow, 'stream': 'actives', 'allannouce': allannouce})
+            return render(request, 'classview.html', {'classshow': classshow, 'stream': 'actives', 'allannouce': allannouce, "id": id})
         else:
             return redirect("/")
 
@@ -68,3 +70,9 @@ def deletecard(request, id):
     crea = CreateClass.objects.get(pk=id)
     crea.delete()
     return redirect('/teacher')
+
+
+def deletelist(request, id):
+    ann = Announcement.objects.get(pk=id)
+    ann.delete()
+    return redirect("/teacher")
