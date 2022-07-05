@@ -31,10 +31,3 @@ class CreateClassForm(forms.ModelForm):
             raise forms.ValidationError("Class Code Already Exists")
 
         return classcode
-
-    def clean_class_code_name(self):
-        class_code_name = self.cleaned_data['class_code_name']
-        if (CreateClass.objects.filter(class_code_name=class_code_name).exists()) and (CreateClass.objects.filter(user=request.user).exists()):
-            raise forms.ValidationError("Subject Code Already Exitst")
-
-        return class_code_name

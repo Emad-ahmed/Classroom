@@ -7,11 +7,76 @@
 {% block content %}
 
 <link rel="stylesheet" href="{% static 'css/card.css' %}" />
-
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+  integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+/>
+<style>
+  .actives {
+    color: white;
+    background: #000;
+  }
+</style>
 <ul class="list-group list-group-horizontal col-12">
-  <li class="list-group-item col-4 text-center"><a href="">Stream</a></li>
-  <li class="list-group-item col-4 text-center"><a href="">Add Work</a></li>
+  <li class="list-group-item col-4 text-center  {{stream}}">
+    <a href="">Stream</a>
+  </li>
+  <li class="list-group-item col-4 text-center">
+    <a href="">Add Work</a>
+  </li>
   <li class="list-group-item col-4 text-center"><a href="">People</a></li>
 </ul>
+{% if messages %}
+<ul class="messages">
+  {% for message in messages %}
+  <li
+    {%
+    if
+    message.tags
+    %}
+    class="bg-{{ message.tags }} p-4 text-center"
+    {%
+    endif
+    %}
+  >
+    {{ message }}
+  </li>
+  {% endfor %}
+</ul>
+{% endif %}
+<div class="container mt-5">
+  <form action="" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <textarea
+      name="annouce"
+      placeholder="Annouce something to your class"
+      id=""
+      cols="10"
+      rows="3"
+      class="form-control"
+    ></textarea>
+
+    <div class="mt-2 d-flex">
+      <button type="submit" class="btn btn-info">Post</button>
+    </div>
+  </form>
+</div>
+<hr />
+<div class="container mt-4">
+  <div class="list-group">
+    {% for ann in allannouce %}
+    <a
+      href="#"
+      class="list-group-item list-group-item-action mb-4"
+      aria-current="true"
+    >
+      {{ann.text}}
+    </a>
+    {% endfor %}
+  </div>
+</div>
 
 {% endblock content %}

@@ -6,68 +6,41 @@
 
 {% block content %}
 
-<style>
-  @media (max-width: 768px) {
-    .card {
-      min-height: 350px;
-      max-width: 700px;
-    }
-  }
-
-  @media (max-width: 420px) {
-    .card {
-      margin-left: -55px;
-      width: 17rem;
-    }
-  }
-  @media (max-width: 300px) {
-    .card {
-      margin-left: -40px;
-      width: 17rem;
-    }
-  }
-</style>
-
 <link rel="stylesheet" href="{% static 'css/card.css' %}" />
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+  integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+/>
 
 <section class="wrapper">
   <div class="container">
     <div class="row">
       {% for cr in create %}
-      <div class="col-sm-12 col-md-6 col-lg-4 mb-4">
-        <div
-          class="card text-white card-has-bg click-col"
-          style="background-image: url('/static/img/main.jpg')"
-        >
-          <img
-            class="card-img d-none"
-            src="https://source.unsplash.com/600x900/?tech,street"
-            alt="Goverment Lorem Ipsum Sit Amet Consectetur dipisi?"
-          />
-          <a href="{% url 'classshow' cr.id %}" class="text-decoration-none">
-            <div class="card-img-overlay d-flex flex-column">
-              <div class="card-body">
-                <small class="card-meta mb-2">{{cr.subject_name}}</small>
-                <h4 class="card-title fw-bold mt-0">
-                  <a class="text-white text-decoration-none" herf="#"
-                    >{{cr.class_code_name}}</a
-                  >
-                </h4>
-                <small><i class="far fa-clock"></i> {{cr.section}}</small>
-              </div>
-              <div class="card-footer">
-                <div class="media">
-                  <div class="media-body">
-                    <h6 class="my-0 text-white d-block">
-                      {{cr.user.first_name}}
-                    </h6>
-                    <small>{{cr.user.email}}</small>
-                  </div>
-                </div>
-              </div>
+      <div class="col-lg-4 mt-5">
+        <a href="{% url 'classshow' cr.id %}">
+          <div class="card" style="width: 18rem">
+            <div class="card-body">
+              <h5 class="card-title">{{cr.class_code_name}}</h5>
+              <p class="card-text">{{cr.subject_name}}</p>
+              <p class="card-text">{{cr.section}}</p>
             </div>
-          </a>
-        </div>
+            <hr class="mhr" />
+            <div class="ms-1">
+              <p>{{cr.user.first_name}}</p>
+              <p>{{cr.user.email}}</p>
+            </div>
+            <hr />
+            <div class="text-center">
+              <a href="{% url 'deletecard' cr.id %}"
+                ><i class="fa-solid fa-calendar-xmark me-3"></i
+              ></a>
+              <a href=""><i class="fa-solid fa-person"></i></a>
+            </div>
+          </div>
+        </a>
       </div>
       {% endfor %}
     </div>

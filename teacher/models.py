@@ -12,4 +12,10 @@ class CreateClass(models.Model):
     classcode = models.CharField(max_length=100)
 
     def __str__(self):
-        return self.class_name
+        return self.class_code_name
+
+
+class Announcement(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    classview = models.ForeignKey(CreateClass, on_delete=models.CASCADE)
+    text = models.TextField()
