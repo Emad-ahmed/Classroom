@@ -6,7 +6,7 @@ from django.forms import fields, widgets
 from django.core import validators
 from django.utils.translation import gettext_lazy as _
 
-from .models import CreateClass
+from .models import CreateClass, AddClassWork
 
 
 class CreateClassForm(forms.ModelForm):
@@ -31,3 +31,19 @@ class CreateClassForm(forms.ModelForm):
             raise forms.ValidationError("Class Code Already Exists")
 
         return classcode
+
+
+class AddClassWorkForm(forms.ModelForm):
+    class Meta:
+        model = AddClassWork
+        fields = ('mytopic', 'description', 'imagephoto',
+                  'document', 'end_date_time')
+        labels = {"mytopic": "Topic",
+                  "description": "Description", 'imagephoto': "image"}
+        widgets = {
+            'mytopic': forms.Select(attrs={'placeholder': 'Topic'}),
+            'description': forms.Textarea(attrs={'placeholder': 'Description'}),
+            'imagephoto': forms.FileInput(attrs={'placeholder': 'Image'}),
+            'document': forms.FileInput(attrs={'placeholder': 'Document'}),
+            'end_date_time': forms.DateTimeInput(attrs={'placeholder': 'Y-m-d H:M:S', 'type': 'datetime-local'}),
+        }

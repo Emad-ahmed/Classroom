@@ -2,6 +2,15 @@ from django.db import models
 from django.contrib.auth.models import User
 # Create your models here.
 
+from datetime import datetime
+
+
+Choice_Type = (
+    ('Assignment', 'Assignment'),
+    ('Presentation', 'Presentation'),
+    ('Exam Info', 'Exam Info'),
+)
+
 
 class CreateClass(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -19,3 +28,24 @@ class Announcement(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     classview = models.ForeignKey(CreateClass, on_delete=models.CASCADE)
     text = models.TextField()
+
+
+Choice_Type = (
+    ('Assignment', 'Assignment'),
+    ('Presentation', 'Presentation'),
+    ('Exam Info', 'Exam Info'),
+)
+
+
+class AddClassWork(models.Model):
+    myclass = models.ForeignKey(
+        CreateClass, on_delete=models.CASCADE)
+    mytopic = models.CharField(
+        max_length=20, choices=Choice_Type, default='Presentation')
+    title = models.TextField(max_length=100, default="none")
+    description = models.TextField(blank=True, null=True)
+    imagephoto = models.ImageField(upload_to='images/', blank=True, null=True)
+    document = models.FileField(upload_to='documents/', blank=True, null=True)
+    current_date = models.DateTimeField(
+        auto_now_add=True,  blank=True)
+    end_date_time = models.DateTimeField(blank=True, null=True)

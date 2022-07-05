@@ -2,8 +2,8 @@ from ast import Return
 from django.shortcuts import redirect, render
 from django.http import HttpResponseRedirect
 from django.views import View
-from .models import CreateClass, Announcement
-from .forms import CreateClassForm
+from .models import CreateClass, Announcement, AddClassWork
+from .forms import CreateClassForm, AddClassWorkForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 # Create your views here.
@@ -44,7 +44,7 @@ class ClassShow(View):
         if request.user.is_authenticated:
             classshow = CreateClass.objects.get(pk=id)
             allannouce = Announcement.objects.filter(classview=classshow)
-            return render(request, 'classview.html', {'classshow': classshow, 'stream': 'actives', 'allannouce': allannouce, "id": id})
+            return render(request, 'classview.html', {'classshow': classshow, 'allannouce': allannouce, "id": id})
         else:
             return redirect("/")
 
@@ -58,7 +58,7 @@ class ClassShow(View):
             user=myuser, classview=classshow, text=annouce)
         annoucesave.save()
         messages.success(request, "Successfully Saved")
-        return render(request, 'classview.html', {'classshow': classshow, 'stream': 'actives', 'allannouce': allannouce})
+        return render(request, 'classview.html', {'classshow': classshow,  'allannouce': allannouce})
 
 
 def userlogout(request):
@@ -76,3 +76,29 @@ def deletelist(request, id):
     ann = Announcement.objects.get(pk=id)
     ann.delete()
     return redirect("/teacher")
+
+
+class Addworkview(View):
+    def get(self, request, id):
+        if request.user.is_authenticated:
+            classshow = CreateClass.objects.get(pk=id)
+            allwork = AddClassWork.objects.filter(myclass=classshow)
+            fm = AddClassWorkForm()
+            return render(request, 'add_work.html', {'form': fm, 'id': id, 'allwork': allwork})
+        else:
+            return redirect("/")
+
+    def post(self, request, id):
+        fm = AddClassWorkForm(request.POST)
+
+        classv = CreateClass.objects.get(pk=id)
+
+        allwork = AddClassWork.objects.filter(myclass=classv)
+        if fm.is_valid():
+            obj = fm.save(commit=False)
+            obj.myclass = classv
+            obj.save()
+            messages.success(request, "Successfully Saved")
+        else:
+            messages.warning(request, "Failed To Saved")
+        return render(request, 'add_work.html', {'form': fm, 'id': id, "allwork": allwork})
