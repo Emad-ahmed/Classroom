@@ -6,6 +6,28 @@
 
 {% block content %}
 
+<style>
+  @media (max-width: 768px) {
+    .card {
+      min-height: 350px;
+      max-width: 700px;
+    }
+  }
+
+  @media (max-width: 420px) {
+    .card {
+      margin-left: -55px;
+      width: 17rem;
+    }
+  }
+  @media (max-width: 300px) {
+    .card {
+      margin-left: -40px;
+      width: 14rem;
+    }
+  }
+</style>
+
 <link rel="stylesheet" href="{% static 'css/card.css' %}" />
 
 <section class="wrapper">
