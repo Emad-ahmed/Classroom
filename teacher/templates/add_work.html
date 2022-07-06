@@ -54,11 +54,11 @@ textarea:focus {
 {% endif %}
 
 <ul class="list-group list-group-horizontal col-12">
-    <li class="list-group-item col-4 text-center  {{stream}}">
+    <li class="list-group-item col-4 text-center">
       <a href="{% url 'classshow' id %}">Stream</a>
     </li>
-    <li class="list-group-item col-4 text-center {{stream}}">
-      <a href="{% url 'classshow' id  %}" >Work</a>
+    <li class="list-group-item col-4 text-center bg-dark text-white">
+      <a href="#" >Work</a>
     </li>
     <li class="list-group-item col-4 text-center"><a href="">People</a></li>
   </ul>
@@ -66,7 +66,7 @@ textarea:focus {
   <!-- Button trigger modal -->
   <button
     type="button"
-    class="btn btn-primary "
+    class="btn btn-primary mt-4 w-25"
     data-bs-toggle="modal"
     data-bs-target="#exampleModal"
   >
@@ -145,7 +145,7 @@ textarea:focus {
           <li><a class="dropdown-item" href="#">Edit</a></li>
           <li><hr class="dropdown-divider" /></li>
           <li>
-            <a class="dropdown-item" href="{% url 'deletelist' ann.id  %}"
+            <a class="dropdown-item" href="{% url 'deletework' ann.id  %}"
               >Delete</a
             >
           </li>
@@ -156,5 +156,5 @@ textarea:focus {
     {% endfor %}
   </div>
 </div>
-
+ 
 {% endblock content %}

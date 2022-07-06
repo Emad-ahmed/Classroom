@@ -43,14 +43,14 @@ class ClassShow(View):
     def get(self, request, id):
         if request.user.is_authenticated:
             classshow = CreateClass.objects.get(pk=id)
-            allannouce = Announcement.objects.filter(classview=classshow)
+            allannouce = Announcement.objects.filter(classview=classshow)[::-1]
             return render(request, 'classview.html', {'classshow': classshow, 'allannouce': allannouce, "id": id})
         else:
             return redirect("/")
 
     def post(self, request, id):
         classshow = CreateClass.objects.get(pk=id)
-        allannouce = Announcement.objects.filter(classview=classshow)
+        allannouce = Announcement.objects.filter(classview=classshow)[::-1]
         myuser = request.user
         annouce = request.POST.get("annouce")
         print(annouce)
@@ -78,11 +78,17 @@ def deletelist(request, id):
     return redirect("/teacher")
 
 
+def deletework(request, id):
+    ann = AddClassWork.objects.get(pk=id)
+    ann.delete()
+    return redirect("/teacher")
+
+
 class Addworkview(View):
     def get(self, request, id):
         if request.user.is_authenticated:
             classshow = CreateClass.objects.get(pk=id)
-            allwork = AddClassWork.objects.filter(myclass=classshow)
+            allwork = AddClassWork.objects.filter(myclass=classshow)[::-1]
             fm = AddClassWorkForm()
             return render(request, 'add_work.html', {'form': fm, 'id': id, 'allwork': allwork})
         else:
@@ -93,7 +99,7 @@ class Addworkview(View):
 
         classv = CreateClass.objects.get(pk=id)
 
-        allwork = AddClassWork.objects.filter(myclass=classv)
+        allwork = AddClassWork.objects.filter(myclass=classv)[::-1]
         if fm.is_valid():
             obj = fm.save(commit=False)
             obj.myclass = classv
