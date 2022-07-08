@@ -2,12 +2,17 @@ from ast import Return
 from django.shortcuts import redirect, render
 from django.http import HttpResponseRedirect
 from django.views import View
+
+from mainapp.forms import SignForm
 from .models import CreateClass, Announcement, AddClassWork
-from .forms import CreateClassForm, AddClassWorkForm
+from .forms import CreateClassForm, AddClassWorkForm, MyPasswordChangeForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 # Create your views here.
 from django.urls import reverse
+from django.contrib.auth.forms import UserCreationForm
+from django.core.files.storage import FileSystemStorage
+from django.http import HttpResponse, HttpResponseNotFound
 
 
 class TeacherHome(View):
@@ -42,14 +47,17 @@ class CreateClassview(View):
 class ClassShow(View):
     def get(self, request, id):
         if request.user.is_authenticated:
+            mainid = id
             classshow = CreateClass.objects.get(pk=id)
             allannouce = Announcement.objects.filter(classview=classshow)[::-1]
-            return render(request, 'classview.html', {'classshow': classshow, 'allannouce': allannouce, "id": id})
+            return render(request, 'classview.html', {'classshow': classshow, "mainid": mainid, 'allannouce': allannouce})
         else:
             return redirect("/")
 
     def post(self, request, id):
+        mainid = id
         classshow = CreateClass.objects.get(pk=id)
+
         allannouce = Announcement.objects.filter(classview=classshow)[::-1]
         myuser = request.user
         annouce = request.POST.get("annouce")
@@ -58,7 +66,7 @@ class ClassShow(View):
             user=myuser, classview=classshow, text=annouce)
         annoucesave.save()
         messages.success(request, "Successfully Saved")
-        return render(request, 'classview.html', {'classshow': classshow,  'allannouce': allannouce})
+        return render(request, 'classview.html', {'classshow': classshow, "mainid": mainid,  'allannouce': allannouce})
 
 
 def userlogout(request):
@@ -87,15 +95,17 @@ def deletework(request, id):
 class Addworkview(View):
     def get(self, request, id):
         if request.user.is_authenticated:
+            mainid = id
             classshow = CreateClass.objects.get(pk=id)
             allwork = AddClassWork.objects.filter(myclass=classshow)[::-1]
             fm = AddClassWorkForm()
-            return render(request, 'add_work.html', {'form': fm, 'id': id, 'allwork': allwork})
+            return render(request, 'add_work.html', {'form': fm, "mainid": mainid,  'allwork': allwork})
         else:
             return redirect("/")
 
     def post(self, request, id):
-        fm = AddClassWorkForm(request.POST)
+        mainid = id
+        fm = AddClassWorkForm(request.POST, request.FILES)
 
         classv = CreateClass.objects.get(pk=id)
 
@@ -107,4 +117,70 @@ class Addworkview(View):
             messages.success(request, "Successfully Saved")
         else:
             messages.warning(request, "Failed To Saved")
-        return render(request, 'add_work.html', {'form': fm, 'id': id, "allwork": allwork})
+        return render(request, 'add_work.html', {'form': fm, "mainid": mainid,   "allwork": allwork})
+
+
+class ShowWorkview(View):
+    def get(self, request, id):
+        if request.user.is_authenticated:
+            allwork = AddClassWork.objects.get(pk=id)
+            return render(request, 'ShowWork.html', {'allwork': allwork})
+        else:
+            return redirect("/")
+
+
+class PasswordChangeView(View):
+    def get(self, request):
+        form = MyPasswordChangeForm(user=request.user)
+
+        return render(request, 'passwordchange.html', {'form': form})
+
+    def post(self, request):
+        form = MyPasswordChangeForm(user=request.user, data=request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Successfully Changed")
+            return redirect("/")
+        else:
+            messages.error(request, "Please Enter Valid Password")
+            return render(request, 'passwordchange.html', {'form': form})
+
+
+class UpdateAccountView(View):
+    def get(self, request):
+        form = SignForm(instance=request.user)
+        return render(request, 'upadte_account.html', {'form': form})
+
+
+class EditworkView(View):
+    def get(self, request, id):
+        mywork = AddClassWork.objects.get(pk=id)
+        form = AddClassWorkForm(instance=mywork)
+        return render(request, 'editwork.html', {'form': form})
+
+    def post(self, request, id):
+        mywork = AddClassWork.objects.get(pk=id)
+        form = AddClassWorkForm(request.POST, request.FILES, instance=mywork)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Successfully Changed")
+            return render(request, 'editwork.html', {'form': form})
+
+
+def pdf_view(request, id):
+
+    maindata = AddClassWork.objects.get(pk=id)
+    mainfile = maindata.document
+
+    fs = FileSystemStorage()
+    filename = str(mainfile)
+
+    if fs.exists(filename):
+        with fs.open(filename) as pdf:
+            response = HttpResponse(pdf, content_type='application/pdf')
+            # user will be prompted display the PDF in the browser
+            response['Content-Disposition'] = 'inline; filename="filename"'
+
+            return response
+    else:
+        return HttpResponseNotFound('The requested pdf was not found in our server.')

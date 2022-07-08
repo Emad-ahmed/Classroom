@@ -1,3 +1,4 @@
+from statistics import mode
 from django.db import models
 from django.contrib.auth.models import User
 # Create your models here.
@@ -44,6 +45,7 @@ class AddClassWork(models.Model):
         max_length=20, choices=Choice_Type, default='Presentation')
     title = models.TextField(max_length=100, default="none")
     description = models.TextField(blank=True, null=True)
+    marks = models.IntegerField(blank=True, null=True, default=10)
     imagephoto = models.ImageField(upload_to='images/', blank=True, null=True)
     document = models.FileField(upload_to='documents/', blank=True, null=True)
     current_date = models.DateTimeField(
