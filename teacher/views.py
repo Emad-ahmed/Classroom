@@ -5,7 +5,7 @@ from django.views import View
 
 from mainapp.forms import SignForm
 from .models import CreateClass, Announcement, AddClassWork
-from .forms import CreateClassForm, AddClassWorkForm, MyPasswordChangeForm
+from .forms import AnnouncementForm, CreateClassForm, AddClassWorkForm, MyPasswordChangeForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 # Create your views here.
@@ -155,7 +155,7 @@ class UpdateAccountView(View):
 class EditworkView(View):
     def get(self, request, id):
         mywork = AddClassWork.objects.get(pk=id)
-        form = AddClassWorkForm(instance=mywork)
+        form = Announcement(instance=mywork)
         return render(request, 'editwork.html', {'form': form})
 
     def post(self, request, id):
@@ -165,6 +165,21 @@ class EditworkView(View):
             form.save()
             messages.success(request, "Successfully Changed")
             return render(request, 'editwork.html', {'form': form})
+
+
+class EditAnnouceView(View):
+    def get(self, request, id):
+        mywork = Announcement.objects.get(pk=id)
+        form = AnnouncementForm(instance=mywork)
+        return render(request, 'editlist.html', {'form': form})
+
+    def post(self, request, id):
+        mywork = Announcement.objects.get(pk=id)
+        form = AnnouncementForm(request.POST, instance=mywork)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Successfully Changed")
+            return render(request, 'editlist.html', {'form': form})
 
 
 def pdf_view(request, id):

@@ -7,7 +7,7 @@ from django import forms
 from django.forms import fields, widgets
 from django.core import validators
 from django.utils.translation import gettext_lazy as _
-
+from .models import Announcement
 from .models import CreateClass, AddClassWork
 
 
@@ -81,3 +81,9 @@ class MyPasswordChangeForm(PasswordChangeForm):
         attrs={'autocomplete': 'new-password', 'class': 'form-control', 'placeholder': 'New Password'}), help_text=password_validation.password_validators_help_text_html())
     new_password2 = forms.CharField(label=_("Confirm New Password"), strip=False, widget=forms.PasswordInput(
         attrs={'autocomplete': 'new-password', 'class': 'form-control', 'placeholder': 'Confirm New Password'}))
+
+
+class AnnouncementForm(forms.ModelForm):
+    class Meta:
+        model = Announcement
+        fields = ['text']
