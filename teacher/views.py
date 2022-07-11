@@ -5,7 +5,7 @@ from django.views import View
 
 from mainapp.forms import SignForm
 from .models import CreateClass, Announcement, AddClassWork
-from .forms import AnnouncementForm, CreateClassForm, AddClassWorkForm, MyPasswordChangeForm
+from .forms import AnnouncementForm, CreateClassForm, AddClassWorkForm, MyPasswordChangeForm, QuesModelForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 # Create your views here.
@@ -165,6 +165,25 @@ class EditworkView(View):
             form.save()
             messages.success(request, "Successfully Changed")
             return render(request, 'editwork.html', {'form': form})
+
+
+class ExamView(View):
+    def get(self, request, id):
+        mainid = id
+        form = QuesModelForm()
+        mywork = CreateClass.objects.get(pk=id)
+        return render(request, 'exam-info.html', {'mainid': id, 'form': form})
+
+    def post(self, request, id):
+        mainid = id
+        mywork = CreateClass.objects.get(pk=id)
+        form = QuesModelForm(request.POST)
+        if form.is_valid():
+            obj = form.save(commit=False)
+            obj.myclass = mywork
+            obj.save()
+            messages.success(request, "Successfully Saved")
+            return render(request, 'exam-info.html', {'form': form, 'mainid': id, })
 
 
 class EditAnnouceView(View):

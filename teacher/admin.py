@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import CreateClass, Announcement, AddClassWork
+from .models import CreateClass, Announcement, AddClassWork, QuesModel
 # Register your models here.
 
 
@@ -16,3 +16,8 @@ class AnnouncementAdmin(admin.ModelAdmin):
 @admin.register(AddClassWork)
 class AddClassWorkAdmin(admin.ModelAdmin):
     list_display = ['id']
+
+
+@admin.register(QuesModel)
+class QuesModelAdmin(admin.ModelAdmin):
+    list_display = ['id', 'question', 'ans']

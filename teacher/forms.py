@@ -8,7 +8,7 @@ from django.forms import fields, widgets
 from django.core import validators
 from django.utils.translation import gettext_lazy as _
 from .models import Announcement
-from .models import CreateClass, AddClassWork
+from .models import CreateClass, AddClassWork, QuesModel
 
 
 class UpdateSignForm(UserCreationForm):
@@ -87,3 +87,18 @@ class AnnouncementForm(forms.ModelForm):
     class Meta:
         model = Announcement
         fields = ['text']
+
+
+class QuesModelForm(forms.ModelForm):
+    class Meta:
+        model = QuesModel
+        fields = ('question', 'op1', 'op2', 'op3', 'op4', 'ans')
+
+        widgets = {
+            'question': forms.TextInput(attrs={'placeholder': 'Question?'}),
+            'op1': forms.TextInput(attrs={'placeholder': 'Option1'}),
+            'op2': forms.TextInput(attrs={'placeholder': 'Option2'}),
+            'op3': forms.TextInput(attrs={'placeholder': 'Option3'}),
+            'op4': forms.TextInput(attrs={'placeholder': 'Option4'}),
+            'ans': forms.TextInput(attrs={'placeholder': 'Answer'}),
+        }

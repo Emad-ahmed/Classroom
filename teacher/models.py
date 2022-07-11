@@ -1,3 +1,4 @@
+from pyexpat import model
 from statistics import mode
 from django.db import models
 from django.contrib.auth.models import User
@@ -51,3 +52,21 @@ class AddClassWork(models.Model):
     current_date = models.DateTimeField(
         auto_now_add=True,  blank=True)
     end_date_time = models.DateTimeField(blank=True, null=True)
+
+
+# Create your models here.
+
+class QuesModel(models.Model):
+    myclass = models.ForeignKey(
+        CreateClass, on_delete=models.CASCADE, null=True)
+
+    topics = models.CharField(max_length=200, default="new")
+    question = models.CharField(max_length=200, null=True)
+    op1 = models.CharField(max_length=200, null=True)
+    op2 = models.CharField(max_length=200, null=True)
+    op3 = models.CharField(max_length=200, null=True)
+    op4 = models.CharField(max_length=200, null=True)
+    ans = models.CharField(max_length=200, null=True)
+
+    def __str__(self):
+        return self.question
