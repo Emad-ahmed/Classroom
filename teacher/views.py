@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect
 from django.views import View
 
 from mainapp.forms import SignForm
-from .models import CreateClass, Announcement, AddClassWork
+from .models import CreateClass, Announcement, AddClassWork, QuesModel
 from .forms import AnnouncementForm, CreateClassForm, AddClassWorkForm, MyPasswordChangeForm, QuesModelForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -172,18 +172,26 @@ class ExamView(View):
         mainid = id
         form = QuesModelForm()
         mywork = CreateClass.objects.get(pk=id)
-        return render(request, 'exam-info.html', {'mainid': id, 'form': form})
+        exam = QuesModel.objects.filter(myclass=mywork)[::-1]
+        return render(request, 'exam-info.html', {'mainid': id, 'form': form, 'exam': exam})
 
     def post(self, request, id):
         mainid = id
         mywork = CreateClass.objects.get(pk=id)
+        exam = QuesModel.objects.filter(myclass=mywork)[::-1]
         form = QuesModelForm(request.POST)
         if form.is_valid():
             obj = form.save(commit=False)
             obj.myclass = mywork
             obj.save()
             messages.success(request, "Successfully Saved")
-            return render(request, 'exam-info.html', {'form': form, 'mainid': id, })
+            return render(request, 'exam-info.html', {'form': form, 'mainid': id,  'exam': exam})
+
+
+class ShowQuizView(View):
+    def get(self, request, slug):
+        allquiz = QuesModel.objects.filter(topics=slug)
+        return render(request, 'allquiz.html', {'allquiz': allquiz})
 
 
 class EditAnnouceView(View):

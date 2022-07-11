@@ -123,4 +123,20 @@
     </div>
   </div>
 
+  <br>
+
+  <div class="container mt-4">
+    <div class="list-group">
+      {% for ann in exam %}
+      <li
+        class="list-group-item d-flex justify-content-between align-items-center mb-4 p-3"
+      >
+      <a href="{% url 'showquiz' ann.topics %}"> {{ann.topics}} </a>
+        
+   
+  
+      {% endfor %}
+    </div>
+  </div>
+
 {% endblock content %}
