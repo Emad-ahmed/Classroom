@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -12,10 +13,50 @@
       integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
       crossorigin="anonymous"
     />
-
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/form.css' %}" />
     <title>{% block title %}{% endblock title %}</title>
   </head>
+
   <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+          <a class="navbar-brand" href="/student"
+            ><img src="{% static 'img/Logo.png' %}" alt="" class="logoimg" /></a
+        ></a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav m-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/student"
+                >Home</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'join_class' %}">Join Class</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Course</a>
+            </li>
+          </ul>
+          <form class="d-flex">
+            <a href="">Profile</a>
+          </form>
+        </div>
+      </div>
+    </nav>
+
     {% block content %}{% endblock content %}
 
     <!-- Optional JavaScript; choose one of the two! -->

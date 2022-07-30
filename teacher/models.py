@@ -59,7 +59,6 @@ class AddClassWork(models.Model):
 class QuesModel(models.Model):
     myclass = models.ForeignKey(
         CreateClass, on_delete=models.CASCADE, null=True)
-
     topics = models.CharField(max_length=200, default="new")
     question = models.CharField(max_length=200, null=True)
     op1 = models.CharField(max_length=200, null=True)
