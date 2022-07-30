@@ -5,7 +5,7 @@ from django.views import View
 
 from mainapp.models import Student
 from .models import JoinClass
-from teacher.models import CreateClass
+from teacher.models import CreateClass, Announcement
 # Create your views here.
 from django.contrib import messages
 
@@ -60,6 +60,29 @@ class ClassworkView(View):
         student = request.session.get("student")
         if student:
             allclass = JoinClass.objects.get(id=id)
-            return render(request, 'joinclass.html')
+            my_class = CreateClass.objects.get(classcode = allclass.myclass.classcode)
+            annoucement = Announcement.objects.filter(classview = my_class)
+            print(my_class)
+            return render(request, 'stream.html', {'annoucement' : annoucement})
         else:
             return redirect("/")
+
+
+class AnnouceView(View):
+    def get(self, request, id):
+        student = request.session.get("student")
+        if student:
+            annoucementview = Announcement.objects.get(id=id)
+            return render(request, 'anounceview.html', {'annoucementview' : annoucementview})
+        else:
+            return redirect("/")
+
+
+def studentlogout(request):
+    try:
+        del request.session['student']
+    except:
+        pass
+    return redirect("/")
+
+

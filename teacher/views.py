@@ -189,8 +189,8 @@ class ExamView(View):
 
 
 class ShowQuizView(View):
-    def get(self, request, slug):
-        allquiz = QuesModel.objects.filter(topics=slug)
+    def get(self, request, id):
+        allquiz = QuesModel.objects.filter(id=id)
         return render(request, 'allquiz.html', {'allquiz': allquiz})
 
 
