@@ -10,5 +10,7 @@ class JoinClass(models.Model):
     myclass = models.ForeignKey(CreateClass, on_delete=models.CASCADE)
 
 
-class Comment(models.Model):
-    
+class CommentMain(models.Model):
+    annoucemain = models.ForeignKey(Announcement, on_delete=models.CASCADE)
+    mystu = models.ForeignKey(Student, on_delete=models.CASCADE)
+    comment = models.TextField()

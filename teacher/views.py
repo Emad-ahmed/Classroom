@@ -58,7 +58,6 @@ class ClassShow(View):
         mainid = id
         classshow = CreateClass.objects.get(pk=id)
 
-        allannouce = Announcement.objects.filter(classview=classshow)[::-1]
         myuser = request.user
         annouce = request.POST.get("annouce")
         print(annouce)
@@ -66,6 +65,7 @@ class ClassShow(View):
             user=myuser, classview=classshow, text=annouce)
         annoucesave.save()
         messages.success(request, "Successfully Saved")
+        allannouce = Announcement.objects.filter(classview=classshow)[::-1]
         return render(request, 'classview.html', {'classshow': classshow, "mainid": mainid,  'allannouce': allannouce})
 
 
@@ -109,7 +109,6 @@ class Addworkview(View):
 
         classv = CreateClass.objects.get(pk=id)
 
-        allwork = AddClassWork.objects.filter(myclass=classv)[::-1]
         if fm.is_valid():
             obj = fm.save(commit=False)
             obj.myclass = classv
@@ -117,6 +116,7 @@ class Addworkview(View):
             messages.success(request, "Successfully Saved")
         else:
             messages.warning(request, "Failed To Saved")
+        allwork = AddClassWork.objects.filter(myclass=classv)[::-1]
         return render(request, 'add_work.html', {'form': fm, "mainid": mainid,   "allwork": allwork})
 
 
@@ -178,14 +178,15 @@ class ExamView(View):
     def post(self, request, id):
         mainid = id
         mywork = CreateClass.objects.get(pk=id)
-        exam = QuesModel.objects.filter(myclass=mywork)[::-1]
+
         form = QuesModelForm(request.POST)
         if form.is_valid():
             obj = form.save(commit=False)
             obj.myclass = mywork
             obj.save()
             messages.success(request, "Successfully Saved")
-            return render(request, 'exam-info.html', {'form': form, 'mainid': id,  'exam': exam})
+        exam = QuesModel.objects.filter(myclass=mywork)[::-1]
+        return render(request, 'exam-info.html', {'form': form, 'mainid': id,  'exam': exam})
 
 
 class ShowQuizView(View):

@@ -4,7 +4,7 @@ from django.shortcuts import redirect, render
 from django.views import View
 
 from mainapp.models import Student
-from .models import JoinClass
+from .models import JoinClass, CommentMain
 from teacher.models import CreateClass, Announcement
 # Create your views here.
 from django.contrib import messages
@@ -60,10 +60,11 @@ class ClassworkView(View):
         student = request.session.get("student")
         if student:
             allclass = JoinClass.objects.get(id=id)
-            my_class = CreateClass.objects.get(classcode = allclass.myclass.classcode)
-            annoucement = Announcement.objects.filter(classview = my_class)
+            my_class = CreateClass.objects.get(
+                classcode=allclass.myclass.classcode)
+            annoucement = Announcement.objects.filter(classview=my_class)
             print(my_class)
-            return render(request, 'stream.html', {'annoucement' : annoucement})
+            return render(request, 'stream.html', {'annoucement': annoucement})
         else:
             return redirect("/")
 
@@ -72,10 +73,29 @@ class AnnouceView(View):
     def get(self, request, id):
         student = request.session.get("student")
         if student:
+
             annoucementview = Announcement.objects.get(id=id)
-            return render(request, 'anounceview.html', {'annoucementview' : annoucementview})
-        else:
-            return redirect("/")
+            comment_view = CommentMain.objects.filter(
+                annoucemain=annoucementview)[::-1]
+
+            return render(request, 'anounceview.html', {'annoucementview': annoucementview, 'comment_view': comment_view})
+
+        return render(request, 'anounceview.html', {'annoucementview': annoucementview, 'comment_view': comment_view})
+
+    def post(self, request, id):
+        student = request.session.get("student")
+        stuenclass = Student.objects.get(pk=student)
+        commenttext = request.POST.get("commenttext")
+        annoucementview = Announcement.objects.get(id=id)
+        
+        savecomment = CommentMain(
+            annoucemain=annoucementview, mystu=stuenclass, comment=commenttext)
+        savecomment.save()
+           
+        
+        comment_view = CommentMain.objects.filter(
+            annoucemain=annoucementview)[::-1]
+        return render(request, 'anounceview.html', {'annoucementview': annoucementview, 'comment_view': comment_view})
 
 
 def studentlogout(request):
@@ -84,5 +104,3 @@ def studentlogout(request):
     except:
         pass
     return redirect("/")
-
-
